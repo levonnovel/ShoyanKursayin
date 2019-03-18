@@ -1,0 +1,23 @@
+﻿<Window x:Class="ShoyanKursayin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShoyanKursayin"
+        mc:Ignorable="d"
+        Title="Фил - помощник абитуриенту" Height="411.2" Width="645" Loaded="Window_Loaded" ResizeMode="NoResize"
+        Icon="C:\Users\lsgoy_000\Desktop\ShoyanKursayin\icon.png">
+    <Window.Foreground>
+        <ImageBrush/>
+    </Window.Foreground>
+    <Grid>
+        <TextBox Name="questionBox" Margin="10,33,10.4,302.6" PreviewKeyDown="TextBox1_PrevKeyDown" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible" FontWeight="Bold" SelectionBrush="#FFAED8FA" Foreground="Black"/>
+        <TextBox Name="answerBlock" Margin="10,105,10.4,230.6" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" BorderBrush="White" SelectionBrush="#FFAED8FA" Foreground="Black"/>
+        <!--<ScrollViewer HorizontalScrollBarVisibility="Auto" Height="50" Margin="10,109,10.4,161.8">-->
+        <TextBox Name="hystoryTextBlock" RenderTransformOrigin="0.549,0.13" Margin="10,182,10.4,22.6" TextOptions.TextFormattingMode="Display" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" BorderBrush="White" FontSize="11" SelectionBrush="#FFAED8FA" Foreground="Black" />
+        <Label Content="История диалогов" HorizontalAlignment="Left" Margin="5,154,0,0" VerticalAlignment="Top" FontFamily="Lucida Sans" FontWeight="Bold" Background="White" Foreground="#FF273E7D"/>
+        <Label Content="Вопрос" HorizontalAlignment="Left" Margin="5,9,0,0" VerticalAlignment="Top" FontFamily="Lucida Sans" FontWeight="Bold" Background="White" Foreground="#FF273E7D"/>
+        <Label Content="Ответ" HorizontalAlignment="Left" Margin="5,80,0,0" VerticalAlignment="Top" FontFamily="Lucida Sans" FontWeight="Bold" Background="White" Foreground="#FF273E7D"/>
+        <!--</ScrollViewer>-->
+    </Grid>
+</Window>
