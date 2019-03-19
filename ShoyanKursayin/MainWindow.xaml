@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ShoyanKursayin"
         mc:Ignorable="d"
         Title="Фил - помощник абитуриенту" Height="411.2" Width="645" Loaded="Window_Loaded" ResizeMode="NoResize"
-        Icon="C:\Users\lsgoy_000\Desktop\ShoyanKursayin\icon.png">
+        Icon="C:\Users\levon.petrosyan\Desktop\Kursayin\ShoyanKursayin\icon.png">
     <Window.Foreground>
         <ImageBrush/>
     </Window.Foreground>
