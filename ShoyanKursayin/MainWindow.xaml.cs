@@ -41,7 +41,7 @@ namespace ShoyanKursayin
 			conv.SetAttribute("date", DateTime.Now.ToLongDateString());
 			conv.SetAttribute("time", DateTime.Now.ToLongTimeString());
 			XmlNode root = doc.ChildNodes.Item(1);
-			root.AppendChild(conv);
+			root.PrependChild(conv);
 			doc.Save("logsHistory.xml");
 		}
 		private void FillIsTypeing(object answer)
@@ -140,11 +140,11 @@ namespace ShoyanKursayin
 					XmlElement quest = doc.CreateElement("Question");
 					XmlElement answ = doc.CreateElement("Answer");
 					quest.InnerText = questionBox.Text;
-					answ.InnerText = answerBlock.Text;
+					answ.InnerText = ans;
 					rep.AppendChild(quest);
 					rep.AppendChild(answ);
 					XmlNodeList convs = doc.GetElementsByTagName("Conversation");
-					XmlNode last = convs.Item(convs.Count - 1);
+					XmlNode last = convs.Item(0);
 					last.AppendChild(rep);
 					doc.Save("logsHistory.xml");
 					#endregion
