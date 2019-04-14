@@ -14,6 +14,7 @@ using System.Xml;
 
 namespace ShoyanKursayin
 {
+	using Excel = Microsoft.Office.Interop.Excel;
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -27,7 +28,7 @@ namespace ShoyanKursayin
 			InitializeComponent();
 		}
 
-		
+
 		string ans;
 		string questio;
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -49,16 +50,16 @@ namespace ShoyanKursayin
 			{
 				ans = inst.GetAnswer(answer.ToString());
 			});
-				Stopwatch stopwatch = new Stopwatch();
+			Stopwatch stopwatch = new Stopwatch();
 			int time = Convert.ToInt32(ans.Length * 30);
 			for (int i = 0; i < 5; i++)
 			{
 				stopwatch.Restart();
-			do
-			{
-				this.Dispatcher.Invoke(() =>
+				do
 				{
-					
+					this.Dispatcher.Invoke(() =>
+					{
+
 						answerBlock.Text = "Филл Печатает";
 
 						if (stopwatch.ElapsedMilliseconds > 100)
@@ -77,10 +78,10 @@ namespace ShoyanKursayin
 						{
 							answerBlock.Text = "Филл Печатает...";
 						}
-					
-					
-				});
-			} while (stopwatch.ElapsedMilliseconds <= time);
+
+
+					});
+				} while (stopwatch.ElapsedMilliseconds <= time);
 			}
 			stopwatch.Stop();
 			this.Dispatcher.Invoke(() =>
@@ -102,10 +103,10 @@ namespace ShoyanKursayin
 
 		private void TextBox1_PrevKeyDown(object sender, KeyEventArgs e)
 		{
-			
+
 			if (e.Key == Key.Return)
 			{
-				
+
 				if (questionBox.Text.ToLower() == "пока" || questionBox.Text.ToLower() == "прощай")
 				{
 					MainWindow context = this;
@@ -122,7 +123,7 @@ namespace ShoyanKursayin
 					questio = questionBox.Text;
 					ans = inst.GetAnswer(questionBox.Text);
 					count = Convert.ToInt32(ans.Length / 3);
-					if(count > 30)
+					if (count > 30)
 					{
 						count = 20;
 					}
@@ -131,7 +132,7 @@ namespace ShoyanKursayin
 					timer.Elapsed += new ElapsedEventHandler(Timer_Tick);
 					timer.Enabled = true;
 					timer.Start();
-					
+
 					#region XMLWrite
 					XmlDocument doc = new XmlDocument();
 					doc.Load("logsHistory.xml");
@@ -147,7 +148,7 @@ namespace ShoyanKursayin
 					last.AppendChild(rep);
 					doc.Save("logsHistory.xml");
 					#endregion
-			
+
 					questionBox.Text = String.Empty;
 				}
 
@@ -171,7 +172,7 @@ namespace ShoyanKursayin
 				else
 				{
 					inst.pos = inst.AllPrevQuestionList.Count;
-					questionBox.Text =String.Empty;
+					questionBox.Text = String.Empty;
 				}
 			}
 		}
@@ -210,6 +211,73 @@ namespace ShoyanKursayin
 			//{
 			//	answerBlock.Text += "a";
 			//});
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Dictionary<string, int> Stats = new Dictionary<string, int>();
+			using (SqlConnection conn = new SqlConnection(Fill.cs))
+			{
+				conn.Open();
+				SqlCommand cmd = new SqlCommand(@"
+													select t.Topic, s.count
+													from [Statistics] s
+													inner join
+													Topics t
+													on s.topic_id = t.ID"
+													, conn);
+				SqlDataReader dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					Stats.Add(dr["Topic"].ToString(), Convert.ToInt32(dr["count"]));
+				}
+			}
+
+
+			object misValue = System.Reflection.Missing.Value;
+			Excel.Application xlApp;
+			Excel.Workbook xlWorkBook;
+			Excel.Worksheet xlWorkSheet;
+			xlApp = new Excel.Application();
+			xlWorkBook = xlApp.Workbooks.Add(misValue);
+			xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+
+
+
+			//add data 
+			int i = 1;
+			foreach(var el in Stats)
+			{
+				xlWorkSheet.Cells[i, 1] = el.Key;
+				xlWorkSheet.Cells[i, 2] = el.Value;
+				i++;
+			}
+
+			//xlWorkSheet.Cells[5, 1] = "Term4";
+			//xlWorkSheet.Cells[5, 2] = "75";
+
+
+			Excel.Range chartRange;
+
+			Excel.ChartObjects xlCharts = (Excel.ChartObjects)xlWorkSheet.ChartObjects(Type.Missing);
+			Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
+			Excel.Chart chartPage = myChart.Chart;
+
+			chartRange = xlWorkSheet.get_Range("A1", "b" + (--i).ToString());
+			chartPage.SetSourceData(chartRange, misValue);
+
+
+			chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
+			xlWorkBook.SaveAs(@"F:\fill\fill.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive);
+			xlWorkBook.Close(true, misValue, misValue);
+			xlApp.Quit();
+
+
+
+			System.Diagnostics.Process.Start(@"F:\fill\fill.xls");
+
+
+
 		}
 	}
 }

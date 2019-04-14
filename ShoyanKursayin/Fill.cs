@@ -20,12 +20,13 @@ namespace ShoyanKursayin
 		Dictionary<int, int> RowsPriorities = new Dictionary<int, int>();
 		Dictionary<int, string> Topics = new Dictionary<int, string>();
 		Dictionary<int, int> RowID_TopicsID = new Dictionary<int, int>();
+		Dictionary<string, string> WordsDict = new Dictionary<string, string>();
 		Dictionary<string, int> WordPriorities = new Dictionary<string, int>();
 		List<string> PrevAnswersList = new List<string>();
 		public List<string> PrevQuestionsList = new List<string>();
 		public int pos = 0;
 		public List<string> AllPrevQuestionList = new List<string>();
-		string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+		public static string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
 		string StandardQuestion { get; set; } = "Хотите знать что-то еще?";
 		string AmbigousQuestion { get; set; } = "Что вас конкретно интересует по теме " + "\"";
 		string NoQuestion { get; set; } = "Я не знаю ответ на Ваш вопрос. Пожалуйста, переформулируйте его.";
@@ -78,11 +79,11 @@ namespace ShoyanKursayin
 			if (isLongAnswer)
 			{
 				isLongAnswer = false;
-				if(currentQuestion.ToLower() == "да")
+				if (currentQuestion.ToLower() == "да")
 				{
 					return FullAnswer;
 				}
-				else if(currentQuestion.ToLower() == "нет")
+				else if (currentQuestion.ToLower() == "нет")
 				{
 					LastQuestion = StandardQuestion;
 					return StandardQuestion;
@@ -119,7 +120,7 @@ namespace ShoyanKursayin
 				LastQuestion = null;
 			}
 			string temp = null;
-			RemoveRedundantWords(ref currentQuestion);
+			//RemoveRedundantWords(ref currentQuestion);
 			if (String.IsNullOrEmpty(currentQuestion))
 			{
 				return NoQuestion;
@@ -199,7 +200,7 @@ namespace ShoyanKursayin
 				if (!PrevAnswersList.Contains(FindAnswerID(answer)))
 				{
 					PrevAnswersList.Add(answer);
-					if(isLongAnswer)
+					if (isLongAnswer)
 					{
 						return answer + StandardLongQuestion;
 					}
@@ -279,6 +280,14 @@ namespace ShoyanKursayin
 				conn.Open();
 				StringBuilder st2 = new StringBuilder("Select Answers.AnswerText, Answers.AlterAnswer1, Answers.AlterAnswer2, Answers.FullAnswer From Questions Left Join Answers ON Answers.Answer_ID = Questions.Answer_ID WHERE Questions.Question_ID = ");
 				st2.Append(questionKey);
+				st2.Append(@"update [Statistics]
+								set count = count + 1
+								from Questions q
+								inner join [Statistics] s
+								on s.topic_id = q.Topic_ID
+								where Question_ID = 
+								");
+				st2.Append(questionKey);
 				SqlCommand cmd2 = new SqlCommand(st2.ToString(), conn);
 				SqlDataReader dr2 = cmd2.ExecuteReader();
 				Random r = new Random();
@@ -299,9 +308,9 @@ namespace ShoyanKursayin
 						answers.Add(dr2["AlterAnswer2"].ToString());
 					}
 					Clear();
-					
-						return answers[r.Next(0, answers.Count)];
-					
+
+					return answers[r.Next(0, answers.Count)];
+
 				}
 			}
 			return null;
@@ -361,6 +370,7 @@ namespace ShoyanKursayin
 					Rows.Add((int)dr1["Question_ID"], s.ToLower());
 				}
 				dr1.Close();
+
 				string query2 = "SELECT Word, Priority FROM WordsPriorities";
 				SqlCommand cmd2 = new SqlCommand(query2, conn);
 				SqlDataReader dr2 = cmd2.ExecuteReader();
@@ -396,7 +406,17 @@ namespace ShoyanKursayin
 						RowID_TopicsID.Add(Convert.ToInt32(dr4["Question_ID"]), Convert.ToInt32(dr4["Topic_ID"]));
 					}
 				}
-				dr3.Close();
+				dr4.Close();
+
+				string query5 = "SELECT Word, Synonyms FROM Synonyms";
+				SqlCommand cmd5 = new SqlCommand(query5, conn);
+				SqlDataReader dr5 = cmd5.ExecuteReader();
+				while (dr5.Read())
+				{
+					//	RowID_TopicsID.Add(Convert.ToInt32(dr5["Question_ID"]), Convert.ToInt32(dr5["Topic_ID"]));
+					WordsDict.Add(Convert.ToString(dr5["Word"]).ToLower(), Convert.ToString(dr5["Synonyms"]));
+				}
+				dr5.Close();
 			}
 		}
 		// Method that returns all possible questions from list
@@ -421,39 +441,68 @@ namespace ShoyanKursayin
 			question = Regex.Replace(question, "[,.?!]", string.Empty);
 
 			string[] currentQuestionArr = question.ToLower().Split(' ');
-			Dictionary<int, List<string>> usedWords = new Dictionary<int, List<string>>();
+			//Dictionary<int, List<string>> usedWords = new Dictionary<int, List<string>>();
+			List<string> usedWords = new List<string>();
+
+			#region OldSystem
+			//foreach (string elem in currentQuestionArr)
+			//{
+			//	if (elem.Length > 1)
+			//	{
+			//		foreach (KeyValuePair<int, string> keyVal in Rows)
+			//		{
+			//			if (!usedWords.ContainsKey(keyVal.Key))
+			//			{
+			//				usedWords.Add(keyVal.Key, new List<string>());
+			//			}
+			//			string[] QTextArr = keyVal.Value.Split(' ');
+			//			foreach (string QTextWord in QTextArr)
+			//			{
+			//				if (elem.Contains(QTextWord) && !usedWords[keyVal.Key].Contains(QTextWord))
+			//				{
+			//					usedWords[keyVal.Key].Add(elem);
+			//					foreach (KeyValuePair<string, int> wordPrior in WordPriorities)
+			//					{
+			//						if (elem.Contains(wordPrior.Key))
+			//						{
+			//							RowsPriorities[keyVal.Key] += wordPrior.Value;
+			//							break;
+			//						}
+			//					}
+			//				}
+
+			//			}
+			//			//usedWords.Clear();
+			//		}
+			//	}
+			//}
+			#endregion OldSystem
 
 			foreach (string elem in currentQuestionArr)
 			{
 				if (elem.Length > 1)
 				{
-					foreach (KeyValuePair<int, string> keyVal in Rows)
+					foreach (KeyValuePair<string, string> kvp in WordsDict)
 					{
-						if (!usedWords.ContainsKey(keyVal.Key))
+						string[] Synonyms = kvp.Value.ToLower().Split(' ');
+						foreach (string WordSyns in Synonyms)
 						{
-							usedWords.Add(keyVal.Key, new List<string>());
-						}
-						string[] QTextArr = keyVal.Value.Split(' ');
-						foreach (string QTextWord in QTextArr)
-						{
-							if (elem.Contains(QTextWord) && !usedWords[keyVal.Key].Contains(QTextWord))
+							if ((elem.Contains(kvp.Key) || (elem.Contains(WordSyns) && WordSyns != "")) && !usedWords.Contains(kvp.Key))
 							{
-								usedWords[keyVal.Key].Add(elem);
-								foreach (KeyValuePair<string, int> wordPrior in WordPriorities)
+								usedWords.Add(kvp.Key);
+								foreach (KeyValuePair<int, string> Question in Rows)
 								{
-									if (elem.Contains(wordPrior.Key))
+									if (Question.Value.Contains(kvp.Key))
 									{
-										RowsPriorities[keyVal.Key] += wordPrior.Value;
-										break;
+										RowsPriorities[Question.Key] += WordPriorities[kvp.Key];
 									}
 								}
 							}
-
 						}
-						//usedWords.Clear();
 					}
 				}
 			}
+
 			foreach (KeyValuePair<int, int> elem in RowsPriorities)
 			{
 				if (elem.Value > maxVal)
