@@ -14,7 +14,6 @@ using System.Xml;
 
 namespace ShoyanKursayin
 {
-	using Excel = Microsoft.Office.Interop.Excel;
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -213,78 +212,18 @@ namespace ShoyanKursayin
 			//});
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			Dictionary<string, int> Stats = new Dictionary<string, int>();
-			using (SqlConnection conn = new SqlConnection(Fill.cs))
-			{
-				conn.Open();
-				SqlCommand cmd = new SqlCommand(@"
-													select t.Topic, s.count
-													from [Statistics] s
-													inner join
-													Topics t
-													on s.topic_id = t.ID"
-													, conn);
-				SqlDataReader dr = cmd.ExecuteReader();
-				while (dr.Read())
-				{
-					Stats.Add(dr["Topic"].ToString(), Convert.ToInt32(dr["count"]));
-				}
-			}
-
-
-			object misValue = System.Reflection.Missing.Value;
-			Excel.Application xlApp;
-			Excel.Workbook xlWorkBook;
-			Excel.Worksheet xlWorkSheet;
-			xlApp = new Excel.Application();
-			xlWorkBook = xlApp.Workbooks.Add(misValue);
-			xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-
-
-
-			//add data 
-			int i = 1;
-			foreach(var el in Stats)
-			{
-				xlWorkSheet.Cells[i, 1] = el.Key;
-				xlWorkSheet.Cells[i, 2] = el.Value;
-				i++;
-			}
-
-			//xlWorkSheet.Cells[5, 1] = "Term4";
-			//xlWorkSheet.Cells[5, 2] = "75";
-
-
-			Excel.Range chartRange;
-
-			Excel.ChartObjects xlCharts = (Excel.ChartObjects)xlWorkSheet.ChartObjects(Type.Missing);
-			Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
-			Excel.Chart chartPage = myChart.Chart;
-
-			chartRange = xlWorkSheet.get_Range("A1", "b" + (--i).ToString());
-			chartPage.SetSourceData(chartRange, misValue);
-
-
-			chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-			xlWorkBook.SaveAs(@"D:\fill\fill.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive);
-			xlWorkBook.Close(true, misValue, misValue);
-			xlApp.Quit();
-
-
-
-			System.Diagnostics.Process.Start(@"D:\fill\fill.xls");
-
-
-
-		}
+	
 
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 			//AdminPanel admin = new AdminPanel();
 			AdminLogin log = new AdminLogin();
 			log.ShowDialog();
+		}
+
+		private void DataRow1_Loaded(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

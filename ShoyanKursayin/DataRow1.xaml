@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="ShoyanKursayin.DataRow1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShoyanKursayin"
+             mc:Ignorable="d" d:DesignWidth="800" Height="22">
+	<Grid Margin="0,0,0,6.6">
+		<TextBox HorizontalAlignment="Left" Margin="10,0,0,-2.2" TextWrapping="Wrap" Name="word" VerticalAlignment="Top" Width="154" Height="18"/>
+		<TextBox HorizontalAlignment="Left" Margin="195,0,0,-1.2" TextWrapping="Wrap" Name="syns" VerticalAlignment="Top" Width="468" Height="17"/>
+		<Button Content="Save" HorizontalAlignment="Left" Margin="683,-2,0,-1.2" Width="61" Click="Button_Click"/>
+		<TextBlock Name="id" HorizontalAlignment="Left" Margin="1690,3,0,-3.2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+
+	</Grid>
+</UserControl>

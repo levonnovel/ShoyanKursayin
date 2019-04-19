@@ -6,10 +6,15 @@
         xmlns:local="clr-namespace:ShoyanKursayin"
         mc:Ignorable="d"
         Title="AdminPanel" Height="450" Width="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="567,183,0,0" TextWrapping="Wrap" Text="dsadasdas" VerticalAlignment="Top"/>
-        <Button Content="Add Synonym" HorizontalAlignment="Left" Margin="567,15,0,0" VerticalAlignment="Top" Width="114"/>
-        <TextBlock HorizontalAlignment="Left" Height="208" Margin="10,15,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="340"/>
+	<Grid>
+		<Button Content="Add Synonym" HorizontalAlignment="Left" Margin="567,15,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click_1"/>
+		<Button Name="Get_Synonyms" Content="Get Synonyms" HorizontalAlignment="Left" Margin="567,61,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click"/>
+		<Button Content="Export " HorizontalAlignment="Left" Margin="567,104,0,0" VerticalAlignment="Top" Width="114" Foreground="Black" Background="#FF0AEB35" Click="Button1_Click"/>
 
-    </Grid>
+		<WrapPanel Name="wrap" HorizontalAlignment="Left" Height="100" Margin="10,250,0,0" VerticalAlignment="Top" Width="774">
+			<!--<local:DataRow1 Background="Yellow" Foreground="Red" Loaded="DataRow1_Loaded" Width="766" ></local:DataRow1>-->
+
+		</WrapPanel>
+
+	</Grid>
 </Window>
