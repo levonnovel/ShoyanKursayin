@@ -268,16 +268,23 @@ namespace ShoyanKursayin
 
 
 			chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-			xlWorkBook.SaveAs(@"F:\fill\fill.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive);
+			xlWorkBook.SaveAs(@"D:\fill\fill.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive);
 			xlWorkBook.Close(true, misValue, misValue);
 			xlApp.Quit();
 
 
 
-			System.Diagnostics.Process.Start(@"F:\fill\fill.xls");
+			System.Diagnostics.Process.Start(@"D:\fill\fill.xls");
 
 
 
+		}
+
+		private void Button_Click_1(object sender, RoutedEventArgs e)
+		{
+			//AdminPanel admin = new AdminPanel();
+			AdminLogin log = new AdminLogin();
+			log.ShowDialog();
 		}
 	}
 }
