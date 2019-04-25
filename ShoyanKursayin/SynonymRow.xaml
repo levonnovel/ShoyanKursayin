@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ShoyanKursayin.SynonymRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShoyanKursayin"
+             mc:Ignorable="d" Height="41.5" Width="827.932">
+    <Grid Margin="0,0,0,10" HorizontalAlignment="Left" Width="798">
+        <TextBox HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Name="word" VerticalAlignment="Top" Width="154" Height="25"/>
+        <TextBox HorizontalAlignment="Left" Margin="193,3,0,0" TextWrapping="Wrap" Name="syns" VerticalAlignment="Top" Width="468" Height="25"/>
+        <Button HorizontalAlignment="Left" Margin="669,3,0,4" Width="35" Click="Button_Click">
+            <Image Height="18" Source="kisspng-computer-icons-floppy-disk-clip-art-save-button-5ac537553c65f8.4797361515228741972474.jpg" Stretch="Fill" Width="23"/>
+        </Button>
+        <TextBlock Name="id" HorizontalAlignment="Left" Margin="1690,3,0,-3.2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Button HorizontalAlignment="Left" Margin="709,3,0,0" VerticalAlignment="Top" Width="35" Height="25" Click="Button_Click_1">
+            <Image Height="18" Source="61848.png" Stretch="Fill" Width="21"/>
+        </Button>
+
+    </Grid>
+</UserControl>

@@ -28,11 +28,11 @@ namespace ShoyanKursayin
 
 		}
 
-		List<Syn> LoadSynsData()
+		List<Synonyms> LoadSynsData()
 		{
 			using (SqlConnection conn = new SqlConnection(Fill.cs))
 			{
-				List<Syn> syns = new List<Syn>();
+				List<Synonyms> syns = new List<Synonyms>();
 				conn.Open();
 				SqlCommand cmd = new SqlCommand(@"select * from Synonyms"
 													, conn);
@@ -42,19 +42,43 @@ namespace ShoyanKursayin
 				while (dr.Read())
 				{
 
-					syns.Add(new Syn{ id = Convert.ToInt32(dr["Id"]), word = dr["Word"].ToString(), syns = dr["Synonyms"].ToString() });
+					syns.Add(new Synonyms { id = Convert.ToInt32(dr["Id"]), word = dr["Word"].ToString(), syns = dr["Synonyms"].ToString() });
 				}
 				return syns;
 			}
 		}
+		List<Answers> LoadAnsData()
+		{
+			using (SqlConnection conn = new SqlConnection(Fill.cs))
+			{
+				List<Answers> answers = new List<Answers>();
+				conn.Open();
+				SqlCommand cmd = new SqlCommand(@"select * from Answers"
+													, conn);
 
+
+				SqlDataReader dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+
+					answers.Add(new Answers {
+							id = Convert.ToInt32(dr["Answer_ID"]),
+							ans = dr["AnswerText"].ToString(),
+							altAns1 = dr["AlterAnswer1"].ToString(),
+							altAns2 = dr["AlterAnswer2"].ToString(),
+							fullAns = dr["FullAnswer"].ToString()
+					});
+				}
+				return answers;
+			}
+		}
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			var syns = LoadSynsData();
 			wrap.Children.Clear();
 			foreach (var el in syns)
 			{
-				DataRow1 uc = new DataRow1();
+				SynonymRow uc = new SynonymRow();
 				uc.id.Text = el.id.ToString();
 				uc.word.Text = el.word;
 				uc.syns.Text = el.syns;
@@ -125,16 +149,44 @@ namespace ShoyanKursayin
 
 
 		}
-		class Syn
+		class Synonyms
 		{
 			public int id;
 			public string word;
 			public string syns;
 		}
-
+		class Answers
+		{
+			public int id;
+			public string ans;
+			public string altAns1;
+			public string altAns2;
+			public string fullAns;
+		}
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 			AddSynonym add = new AddSynonym();
+			add.ShowDialog();
+		}
+
+	
+		private void GetAnswers(object sender, RoutedEventArgs e)
+		{
+			var ans = LoadAnsData();
+			wrap.Children.Clear();
+			foreach (var el in ans)
+			{
+				AnswerRow uc = new AnswerRow();
+				uc.id.Text = el.id.ToString();
+				uc.answer.Text = el.ans;
+				uc.alterAnswer.Text = el.altAns1;
+				wrap.Children.Add(uc);
+			}
+		}
+
+		private void AddAnswer(object sender, RoutedEventArgs e)
+		{
+			AddAnswer add = new AddAnswer();
 			add.ShowDialog();
 		}
 	}

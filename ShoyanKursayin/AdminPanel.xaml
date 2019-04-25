@@ -7,14 +7,33 @@
         mc:Ignorable="d"
         Title="AdminPanel" Height="450" Width="800">
 	<Grid>
-		<Button Content="Add Synonym" HorizontalAlignment="Left" Margin="567,15,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click_1"/>
-		<Button Name="Get_Synonyms" Content="Get Synonyms" HorizontalAlignment="Left" Margin="567,61,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click"/>
+		<Button Content="Add Synonym" HorizontalAlignment="Left" Margin="129,10,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click_1"/>
+		<Button Name="Get_Synonyms" Content="Get Synonyms" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click"/>
 		<Button Content="Export " HorizontalAlignment="Left" Margin="567,104,0,0" VerticalAlignment="Top" Width="114" Foreground="Black" Background="#FF0AEB35" Click="Button1_Click"/>
+         
+        <StackPanel Name="wrap" HorizontalAlignment="Left" Height="160" Margin="10,250,0,0" VerticalAlignment="Top" Width="774">
+                <!--<local:DataRow1 Background="Yellow" Foreground="Red" Loaded="DataRow1_Loaded" Width="766" ></local:DataRow1>-->
 
-		<WrapPanel Name="wrap" HorizontalAlignment="Left" Height="100" Margin="10,250,0,0" VerticalAlignment="Top" Width="774">
-			<!--<local:DataRow1 Background="Yellow" Foreground="Red" Loaded="DataRow1_Loaded" Width="766" ></local:DataRow1>-->
-
-		</WrapPanel>
-
-	</Grid>
+            </StackPanel>
+        <Button x:Name="Get_Anwers" Content="Get Anwers" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="114" Click="GetAnswers"/>
+        <Button Content="Add Answer" HorizontalAlignment="Left" Margin="129,37,0,0" VerticalAlignment="Top" Width="114" Click="AddAnswer"/>
+        <!--<ComboBox Margin="291,11,345,361">
+            <ComboBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="Red">Red</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="Green">Green</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="Blue">Blue</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            
+        </ComboBox>-->
+    </Grid>
 </Window>

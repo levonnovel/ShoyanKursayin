@@ -87,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddAnswer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddSynonym.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,7 +103,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DataRow1.xaml">
+    <Page Include="AnswerRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SynonymRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,6 +115,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddAnswer.xaml.cs">
+      <DependentUpon>AddAnswer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddSynonym.xaml.cs">
       <DependentUpon>AddSynonym.xaml</DependentUpon>
     </Compile>
@@ -116,12 +127,15 @@
     <Compile Include="AdminPanel.xaml.cs">
       <DependentUpon>AdminPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AnswerRow.xaml.cs">
+      <DependentUpon>AnswerRow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataRow1.xaml.cs">
-      <DependentUpon>DataRow1.xaml</DependentUpon>
+    <Compile Include="SynonymRow.xaml.cs">
+      <DependentUpon>SynonymRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fill.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -169,6 +183,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="kisspng-computer-icons-floppy-disk-clip-art-save-button-5ac537553c65f8.4797361515228741972474.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="61848.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
