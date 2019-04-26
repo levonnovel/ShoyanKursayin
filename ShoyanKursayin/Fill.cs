@@ -231,7 +231,7 @@ namespace ShoyanKursayin
 			using (SqlConnection conn = new SqlConnection(cs))
 			{
 				conn.Open();
-				StringBuilder st = new StringBuilder("Select Answers.Answer_ID FROM Answers WHERE AnswerText = @answer OR AlterAnswer1 = @answer OR AlterAnswer2 = @answer");
+				StringBuilder st = new StringBuilder("Select Answers.Answer_ID FROM Answers WHERE AnswerText = @answer OR AlterAnswer1 = @answer OR AlterAnswer2 = @answer OR ArmAnswer = @answer");
 				SqlCommand cmd = new SqlCommand(st.ToString(), conn);
 				SqlParameter paramID = new SqlParameter("@answer", ans);
 				cmd.Parameters.Add(paramID);
@@ -272,13 +272,14 @@ namespace ShoyanKursayin
 			question = String.Join(" ", words);
 		}
 		// Method that returns the answer of the question
+		static string ArmAns;
 		string Answer(string s)
 		{
 			using (SqlConnection conn = new SqlConnection(cs))
 			{
 				List<string> answers = new List<string>();
 				conn.Open();
-				StringBuilder st2 = new StringBuilder("Select Answers.AnswerText, Answers.AlterAnswer1, Answers.AlterAnswer2, Answers.FullAnswer From Questions Left Join Answers ON Answers.Answer_ID = Questions.Answer_ID WHERE Questions.Question_ID = ");
+				StringBuilder st2 = new StringBuilder("Select Answers.AnswerText, Answers.AlterAnswer1, Answers.AlterAnswer2, Answers.FullAnswer, Answers.ArmAnswer From Questions Left Join Answers ON Answers.Answer_ID = Questions.Answer_ID WHERE Questions.Question_ID = ");
 				st2.Append(questionKey);
 				st2.Append(@"update [Statistics]
 								set count = count + 1
@@ -307,9 +308,19 @@ namespace ShoyanKursayin
 					{
 						answers.Add(dr2["AlterAnswer2"].ToString());
 					}
+					if (!String.IsNullOrEmpty(dr2["ArmAnswer"].ToString()))
+					{
+						ArmAns = dr2["ArmAnswer"].ToString();
+					}
 					Clear();
-
-					return answers[r.Next(0, answers.Count)];
+					if(((MainWindow)Application.Current.MainWindow).Language.Text == "Armenian" && ArmAns != null)
+					{
+						return ArmAns;
+					}
+					else
+					{
+						return answers[r.Next(0, answers.Count)];
+					}
 
 				}
 			}

@@ -20,7 +20,7 @@ namespace ShoyanKursayin
 	public partial class MainWindow : Window
 	{
 		Fill inst;
-
+		public static string Lang { get; set; } = "RU";
 		public MainWindow()
 		{
 
@@ -116,6 +116,7 @@ namespace ShoyanKursayin
 				else if (questionBox.Text.Length > 0)
 				{
 					questionBox.IsEnabled = false;
+					
 					inst.AllPrevQuestionList.Add(questionBox.Text);
 					inst.pos = inst.AllPrevQuestionList.Count;
 					timer = new System.Timers.Timer();
@@ -224,6 +225,18 @@ namespace ShoyanKursayin
 		private void DataRow1_Loaded(object sender, RoutedEventArgs e)
 		{
 
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Lang = "ARM";
+			Language.Text = "Armenian";
+		}
+
+		private void Button_Click_2(object sender, RoutedEventArgs e)
+		{
+			Lang = "RU";
+			Language.Text = "Russian";
 		}
 	}
 }

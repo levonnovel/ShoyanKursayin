@@ -221,5 +221,11 @@
   <ItemGroup>
     <Resource Include="61848.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Hopstarter-Flag-Borderless-Armenia.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Russia-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
