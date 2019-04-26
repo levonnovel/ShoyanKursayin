@@ -87,6 +87,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddQuestion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AddTopic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddAnswer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +111,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="QuestionRow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TopicRow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AnswerRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +131,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddQuestion.xaml.cs">
+      <DependentUpon>AddQuestion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddTopic.xaml.cs">
+      <DependentUpon>AddTopic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddAnswer.xaml.cs">
       <DependentUpon>AddAnswer.xaml</DependentUpon>
     </Compile>
@@ -126,6 +148,12 @@
     </Compile>
     <Compile Include="AdminPanel.xaml.cs">
       <DependentUpon>AdminPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionRow.xaml.cs">
+      <DependentUpon>QuestionRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TopicRow.xaml.cs">
+      <DependentUpon>TopicRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AnswerRow.xaml.cs">
       <DependentUpon>AnswerRow.xaml</DependentUpon>

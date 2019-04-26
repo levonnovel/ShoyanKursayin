@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ShoyanKursayin.SynonymRow"
+﻿<UserControl x:Class="ShoyanKursayin.TopicRow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,13 +6,12 @@
              xmlns:local="clr-namespace:ShoyanKursayin"
              mc:Ignorable="d" Height="41.5" Width="827.932">
 	<Grid Margin="0,0,0,10" HorizontalAlignment="Left" Width="798">
-		<TextBlock Name="id" HorizontalAlignment="Left" Margin="10,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Background="White" Height="24" Width="49"/>
-		<TextBox HorizontalAlignment="Left" Margin="73,4,0,0" TextWrapping="Wrap" Name="word" VerticalAlignment="Top" Width="154" Height="25"/>
-		<TextBox HorizontalAlignment="Left" Margin="256,4,0,0" TextWrapping="Wrap" Name="syns" VerticalAlignment="Top" Width="468" Height="25"/>
-		<Button HorizontalAlignment="Left" Margin="733,3,0,3.6" Width="35" Click="Button_Click">
+		<TextBlock Name="id" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="28" Width="50" Background="White"/>
+		<TextBox HorizontalAlignment="Left" Margin="81,3,0,0" TextWrapping="Wrap" Name="topic" VerticalAlignment="Top" Width="154" Height="25"/>
+		<Button HorizontalAlignment="Left" Margin="254,5,0,1.6" Width="35" Click="Save">
 			<Image Height="18" Source="kisspng-computer-icons-floppy-disk-clip-art-save-button-5ac537553c65f8.4797361515228741972474.jpg" Stretch="Fill" Width="23"/>
 		</Button>
-		<Button HorizontalAlignment="Left" Margin="773,3,-10,0" VerticalAlignment="Top" Width="35" Height="25" Click="Button_Click_1">
+		<Button HorizontalAlignment="Left" Margin="294,5,0,0" VerticalAlignment="Top" Width="35" Height="25" Click="Remove">
 			<Image Height="18" Source="61848.png" Stretch="Fill" Width="21"/>
 		</Button>
 

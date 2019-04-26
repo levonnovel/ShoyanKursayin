@@ -72,6 +72,59 @@ namespace ShoyanKursayin
 				return answers;
 			}
 		}
+
+		List<Topics> LoadTopicsData()
+		{
+			using (SqlConnection conn = new SqlConnection(Fill.cs))
+			{
+				List<Topics> answers = new List<Topics>();
+				conn.Open();
+				SqlCommand cmd = new SqlCommand(@"select * from Topics"
+													, conn);
+
+				SqlDataReader dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+
+					answers.Add(new Topics
+					{
+						id = Convert.ToInt32(dr["ID"]),
+						topic = dr["Topic"].ToString(),
+					});
+				}
+				return answers;
+			}
+		}
+		List<Questions> LoadQuestionsData()
+		{
+			using (SqlConnection conn = new SqlConnection(Fill.cs))
+			{
+				List<Questions> answers = new List<Questions>();
+				conn.Open();
+				SqlCommand cmd = new SqlCommand(@"select * from Questions"
+													, conn);
+
+				SqlDataReader dr = cmd.ExecuteReader();
+				while (dr.Read())
+				{
+					Questions q = new Questions();
+					q.id = Convert.ToInt32(dr["Question_ID"]);
+					q.question = dr["QuestionText"].ToString();
+					
+					if (!(dr["Answer_ID"] is DBNull))
+					{
+						q.answer_id = Convert.ToInt32(dr["Answer_ID"]);
+					}
+					if (!(dr["Topic_ID"] is DBNull))
+					{
+						q.topic_id = Convert.ToInt32(dr["Topic_ID"]);
+					}
+
+					answers.Add(q);
+				}
+				return answers;
+			}
+		}
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			var syns = LoadSynsData();
@@ -163,6 +216,18 @@ namespace ShoyanKursayin
 			public string altAns2;
 			public string fullAns;
 		}
+		class Topics
+		{
+			public int id;
+			public string topic;
+		}
+		class Questions
+		{
+			public int id;
+			public string question;
+			public int answer_id;
+			public int topic_id;
+		}
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 			AddSynonym add = new AddSynonym();
@@ -188,6 +253,46 @@ namespace ShoyanKursayin
 		{
 			AddAnswer add = new AddAnswer();
 			add.ShowDialog();
+		}
+
+		private void AddTopic(object sender, RoutedEventArgs e)
+		{
+			AddTopic add = new AddTopic();
+			add.ShowDialog();
+		}
+
+		private void GetTopics(object sender, RoutedEventArgs e)
+		{
+			var topics = LoadTopicsData();
+			wrap.Children.Clear();
+			foreach (var el in topics)
+			{
+				TopicRow uc = new TopicRow();
+				uc.id.Text = el.id.ToString();
+				uc.topic.Text = el.topic;
+				wrap.Children.Add(uc);
+			}
+		}
+
+		private void AddQuestion(object sender, RoutedEventArgs e)
+		{
+			AddQuestion add = new AddQuestion();
+			add.ShowDialog();
+		}
+
+		private void GetQuestions(object sender, RoutedEventArgs e)
+		{
+			var questions = LoadQuestionsData();
+			wrap.Children.Clear();
+			foreach (var el in questions)
+			{
+				QuestionRow uc = new QuestionRow();
+				uc.id.Text = el.id.ToString();
+				uc.question.Text = el.question;
+				uc.answer_id.Text = el.answer_id.ToString();
+				uc.topic_id.Text = el.topic_id.ToString();
+				wrap.Children.Add(uc);
+			}
 		}
 	}
 }

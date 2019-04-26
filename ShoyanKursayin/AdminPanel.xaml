@@ -15,9 +15,13 @@
                 <!--<local:DataRow1 Background="Yellow" Foreground="Red" Loaded="DataRow1_Loaded" Width="766" ></local:DataRow1>-->
 
             </StackPanel>
-        <Button x:Name="Get_Anwers" Content="Get Anwers" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="114" Click="GetAnswers"/>
-        <Button Content="Add Answer" HorizontalAlignment="Left" Margin="129,37,0,0" VerticalAlignment="Top" Width="114" Click="AddAnswer"/>
-        <!--<ComboBox Margin="291,11,345,361">
+        <Button x:Name="Get_Answers" Content="Get Answers" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="114" Click="GetAnswers"/>
+        <Button Content="Add Answer" HorizontalAlignment="Left" Margin="129,34,0,0" VerticalAlignment="Top" Width="114" Click="AddAnswer"/>
+		<Button x:Name="Get_Topics" Content="Get Topics" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="114" Click="GetTopics"/>
+		<Button Content="Add Topic" HorizontalAlignment="Left" Margin="129,58,0,0" VerticalAlignment="Top" Width="114" Click="AddTopic"/>
+		<Button x:Name="Get_Questions" Content="Get Questions" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Width="114" Click="GetQuestions"/>
+		<Button Content="Add Question" HorizontalAlignment="Left" Margin="129,81,0,0" VerticalAlignment="Top" Width="114" Click="AddQuestion"/>
+		<!--<ComboBox Margin="291,11,345,361">
             <ComboBoxItem>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Foreground="Red">Red</TextBlock>

@@ -18,28 +18,29 @@ namespace ShoyanKursayin
 	/// <summary>
 	/// Interaction logic for AddAnswer.xaml
 	/// </summary>
-	public partial class AddAnswer : Window
+	public partial class AddTopic : Window
 	{
-		public AddAnswer()
+		public AddTopic()
 		{
 			InitializeComponent();
 		}
-		private void AddAns(object sender, RoutedEventArgs e)
+		private void AddTpc(object sender, RoutedEventArgs e)
 		{
 			using (SqlConnection conn = new SqlConnection(Fill.cs))
 			{
 				conn.Open();
-				SqlCommand cmd = new SqlCommand(@"INSERT INTO Answers(AnswerText, AlterAnswer1) VALUES ( @ans, @altans )"
+				SqlCommand cmd = new SqlCommand(@"INSERT INTO Topics VALUES ( @topic )"
 													, conn);
 
-				cmd.Parameters.AddWithValue("@ans", this.ans.Text);
-				cmd.Parameters.AddWithValue("@altans", this.altans.Text);
+				cmd.Parameters.AddWithValue("@topic", this.topic.Text);
 
 				SqlDataReader dr = cmd.ExecuteReader();
 				MessageBox.Show("Successfully added");
 				AdminPanel admin = Application.Current.Windows.OfType<AdminPanel>().FirstOrDefault();
-				admin.Get_Answers.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+				admin.Get_Topics.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 			}
 		}
+
+	
 	}
 }

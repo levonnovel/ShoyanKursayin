@@ -19,33 +19,32 @@ namespace ShoyanKursayin
     /// <summary>
     /// Interaction logic for AnswerRow.xaml
     /// </summary>
-    public partial class AnswerRow : UserControl
+    public partial class TopicRow : UserControl
     {
-        public AnswerRow()
+        public TopicRow()
         {
             InitializeComponent();
         }
 
 		private void Save(object sender, RoutedEventArgs e)
 		{
-			SaveAns(this.id.Text, this.answer.Text, this.alterAnswer.Text);
+			SaveTopic(this.id.Text, this.topic.Text);
 		}
-		public void SaveAns(string id, string ans, string altans)
+		public void SaveTopic(string id, string topic)
 		{
 			using (SqlConnection conn = new SqlConnection(Fill.cs))
 			{
 				conn.Open();
-				SqlCommand cmd = new SqlCommand(@"UPDATE Answers SET AnswerText = @ans, AlterAnswer1=@altans WHERE Answer_ID=@id"
+				SqlCommand cmd = new SqlCommand(@"UPDATE Topics SET Topic = @topic WHERE ID=@id"
 													, conn);
 
 				cmd.Parameters.AddWithValue("@id", Convert.ToInt32(id));
-				cmd.Parameters.AddWithValue("@ans", ans);
-				cmd.Parameters.AddWithValue("@altans", altans);
+				cmd.Parameters.AddWithValue("@topic", topic);
 
 				SqlDataReader dr = cmd.ExecuteReader();
 				MessageBox.Show("Row has been successfully changed");
 				AdminPanel admin = Application.Current.Windows.OfType<AdminPanel>().FirstOrDefault();
-				admin.Get_Answers.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+				admin.Get_Topics.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
 			}
 		}
@@ -71,14 +70,14 @@ namespace ShoyanKursayin
 			using (SqlConnection conn = new SqlConnection(Fill.cs))
 			{
 				conn.Open();
-				SqlCommand cmd = new SqlCommand(@"DELETE FROM Answers WHERE Answer_ID=@id"
+				SqlCommand cmd = new SqlCommand(@"DELETE FROM Topics WHERE ID=@id"
 													, conn);
 
 				cmd.Parameters.AddWithValue("@id", Convert.ToInt32(id));
 
 				SqlDataReader dr = cmd.ExecuteReader();
 				AdminPanel admin = Application.Current.Windows.OfType<AdminPanel>().FirstOrDefault();
-				admin.Get_Answers.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+				admin.Get_Topics.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
 			}
 		}
